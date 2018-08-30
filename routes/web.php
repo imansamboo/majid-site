@@ -14,20 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/inner', function () {
+    return view('inner');
+});
+Route::get('admin/tests', 'Admin\\TestsController@index');
 
-Route::resource('admin/alis', 'Admin\\AlisController');
-Route::resource('admin/menus', 'Admin\\MenusController');
-Route::resource('admin/menu', 'Admin\\MenuController');
-Route::resource('admin/menu', 'Admin\\MenuController');
-Route::resource('admin/menu', 'Admin\\MenuController');
-Route::resource('admin/menus', 'Admin\\MenusController');
 Route::resource('admin/contents', 'Admin\\ContentsController');
-Route::resource('admin/contents', 'Admin\\ContentsController');
-Route::resource('admin/menus', 'Admin\\MenusController');
-Route::resource('admin/contents', 'Admin\\ContentsController');
-Route::resource('admin/menus', 'Admin\\MenusController');
-Route::resource('admin/menu', 'Admin\\MenuController');
-Route::resource('admin/mens', 'Admin\\MensController');
-Route::resource('admin/contents', 'Admin\\ContentsController');
-Route::resource('admin/mens', 'Admin\\MensController');
-Route::resource('admin/contents', 'Admin\\ContentsController');
+Route::resource('admin/menus', 'Admin\\MensController');
+Route::resource('admin/photos', 'Admin\\PhotosController');
