@@ -32,9 +32,27 @@ class ShowProfile extends Controller
             print $node->text()."\n";
         });*/
         /*get a text*/
-        /*$crawler->filter('a.divider-vertical')->each(function ($node) {
-            print $node->text()."\n";
-        });*/
+        $crawler->filter('a.divider-vertical')->each(function ($node) {
+            print $node->text()."<br>";
+            print $node->attr('href')."<br>";
+            print str_replace('https://www.cef.co.uk',  url('/'), $node->attr('href'))."<br>";
+            //echo '<pre>';
+            //print_r($node->siblings()->children()->html());
+           $node->siblings()->children()->each(function ($node) {
+               $node->children()->each(function ($node) {
+                   print $node->text() . "<br>";
+                   $node->children()->each(function ($node) {
+                       print $node->attr('href')."<br>";
+                       print str_replace('https://www.cef.co.uk',  url('/'), $node->attr('href'))."<br>";
+                   });
+                   /*$node->parents()->first()->each(function ($node) {
+                       print $node->html()."<br>";
+                   });*/
+               });
+           });
+            echo '<hr>';
+            echo '<hr>';
+        });
         /*get a href*/
         /*$crawler->filter('a.divider-vertical')->each(function ($node) {
             print $node->attr('href');;
@@ -65,7 +83,7 @@ class ShowProfile extends Controller
             /*print $node->attr('href');
                 echo '<hr>';
                 print $node->text();
-                echo '<hr>';*/
+                echo '<hr>';
             });*/
 
     }

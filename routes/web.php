@@ -25,3 +25,4 @@ Route::get('admin/tests/create', 'Admin\\TestsController@index2');
 Route::resource('admin/contents', 'Admin\\ContentsController');
 Route::resource('admin/menus', 'Admin\\MensController');
 Route::resource('admin/photos', 'Admin\\PhotosController');
+Route::get('iman', 'ShowProfile@test');
