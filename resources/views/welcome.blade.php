@@ -22,6 +22,7 @@
             @include('layouts/nonBelowestDirectory');
             @include('layouts/pagination');
             @include('layouts/BestSellers');
+            {{url("/posts/")}}
         </div>
     </div>
 </div>

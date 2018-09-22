@@ -10,14 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
+    return view('mainer');
+});
+Route::get('/welcome', function () {
     return view('welcome');
 });
 Route::get('/inner', function () {
     return view('inner');
 });
 Route::get('admin/tests', 'Admin\\TestsController@index');
+Route::get('admin/tests/create', 'Admin\\TestsController@index2');
 
 Route::resource('admin/contents', 'Admin\\ContentsController');
 Route::resource('admin/menus', 'Admin\\MensController');

@@ -25,7 +25,7 @@ class Men extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'parent_name'];
+    protected $fillable = ['name', 'parent_name', 'urlMain', 'urlMy'];
 
     
 }
