@@ -16,7 +16,7 @@ class CreateContentsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->longText('content');
-            $table->integer('men_id')->unsigned()->nullable();;
+            $table->integer('men_id')->unsigned()->nullable();
             });
         Schema::table('contents', function ($table) {
             $table->foreign('men_id')->references('id')->on('mens')->onDelete('cascade')->onUpdate('cascade');

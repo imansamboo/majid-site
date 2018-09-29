@@ -1,0 +1,33 @@
+/**
+ * ----------------------------------------------------------------------------------------
+ * Demo styles.
+ * ----------------------------------------------------------------------------------------
+ */
+
+.demo-area [class^='col-'] {
+	background-color: white;
+
+	color: #fff;
+}
+
+.iman-width {
+	width: 1250px;
+}
+.iman-grey{
+	color: grey;
+	background-color: grey;
+}
+.iman2-width{
+	width:250px;
+}
+
+.panel [class^='col-lg-2'] {
+	background-color: white;
+
+}
+.iman-margin-left{
+	margin-left: 0.7%;
+}
+.iman-margin-left-2{
+	margin-left: 2.2%;
+}

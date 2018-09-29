@@ -10,24 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
+    return view('mainer');
+});
+Route::get('/welcome', function () {
     return view('welcome');
 });
+Route::get('/inner', function () {
+    return view('inner');
+});
+Route::get('admin/tests', 'Admin\\TestsController@index');
+Route::get('admin/tests/create', 'Admin\\TestsController@index2');
 
-Route::resource('admin/alis', 'Admin\\AlisController');
-Route::resource('admin/menus', 'Admin\\MenusController');
-Route::resource('admin/menu', 'Admin\\MenuController');
-Route::resource('admin/menu', 'Admin\\MenuController');
-Route::resource('admin/menu', 'Admin\\MenuController');
-Route::resource('admin/menus', 'Admin\\MenusController');
 Route::resource('admin/contents', 'Admin\\ContentsController');
-Route::resource('admin/contents', 'Admin\\ContentsController');
-Route::resource('admin/menus', 'Admin\\MenusController');
-Route::resource('admin/contents', 'Admin\\ContentsController');
-Route::resource('admin/menus', 'Admin\\MenusController');
-Route::resource('admin/menu', 'Admin\\MenuController');
-Route::resource('admin/mens', 'Admin\\MensController');
-Route::resource('admin/contents', 'Admin\\ContentsController');
-Route::resource('admin/mens', 'Admin\\MensController');
-Route::resource('admin/contents', 'Admin\\ContentsController');
+Route::resource('admin/menus', 'Admin\\MensController');
+Route::resource('admin/photos', 'Admin\\PhotosController');
+Route::get('iman', 'ShowProfile@test');
+Route::get('iman2', 'ShowProfile@test2');
+Route::get('iman3', 'ShowProfile@test3');
+Route::get('iman4', 'ShowProfile@test4');
+Route::get('iman5', 'ShowProfile@test5');
+Route::get('iman6', 'ShowProfile@test6');
+Route::get('iman7', 'ShowProfile@test7');
