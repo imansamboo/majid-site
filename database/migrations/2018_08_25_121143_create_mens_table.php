@@ -15,8 +15,8 @@ class CreateMensTable extends Migration
         Schema::create('mens', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('name');
-            $table->string('parent_name');
+            $table->string('name')->nullable();
+            $table->string('parent_name')->nullable();
             });
     }
 

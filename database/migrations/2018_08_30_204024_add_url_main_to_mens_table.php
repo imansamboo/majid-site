@@ -14,7 +14,7 @@ class AddUrlMainToMensTable extends Migration
     public function up()
     {
         Schema::table('mens', function (Blueprint $table) {
-            $table->string('urlMain');
+            $table->string('urlMain')->nullable();
             //
         });
     }

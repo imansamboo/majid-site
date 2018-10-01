@@ -15,11 +15,11 @@ class AddContentAddToContentsTable extends Migration
     {
         Schema::table('contents', function (Blueprint $table) {
             //
-            $table->string('content_src');
-            $table->text('content_header');
-            $table->text('content_partstock');
-            $table->longText('content_li');
-            $table->longText('content_spec');
+            $table->string('content_src')->nullable();
+            $table->text('content_header')->nullable();
+            $table->text('content_partstock')->nullable();
+            $table->longText('content_li')->nullable();
+            $table->longText('content_spec')->nullable();
         });
     }
 

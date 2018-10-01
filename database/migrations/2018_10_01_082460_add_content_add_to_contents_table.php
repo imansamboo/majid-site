@@ -15,14 +15,14 @@ class AddContentAddToContentsTable extends Migration
     {
         Schema::table('mens', function (Blueprint $table) {
             //
-            $table->text('partCode');
-            $table->text('stockCode');
-            $table->text('description');
-            $table->text('thumnailSrc');
-            $table->text('imgSrc');
-            $table->text('imgInnerSrc');
-            $table->text('header');
-            $table->integer('degree');
+            $table->text('partCode')->nullable();
+            $table->text('stockCode')->nullable();
+            $table->text('description')->nullable();
+            $table->text('thumnailSrc')->nullable();
+            $table->text('imgSrc')->nullable();
+            $table->text('imgInnerSrc')->nullable();
+            $table->text('header')->nullable();
+            $table->integer('degree')->nullable();
         });
     }
 

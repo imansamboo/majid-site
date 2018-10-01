@@ -15,7 +15,7 @@ class AddContentSrcToContentsTable extends Migration
     {
         Schema::table('contents', function (Blueprint $table) {
             //
-            $table->longText('content_src');
+            $table->longText('content_src')->nullable();
         });
     }
 

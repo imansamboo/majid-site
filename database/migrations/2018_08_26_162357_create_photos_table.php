@@ -16,9 +16,9 @@ class CreatePhotosTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('menu_id')->unsigned()->nullable();
-            $table->string('type');
-            $table->string('where');
-            $table->string('file');
+            $table->string('type')->nullable();
+            $table->string('where')->nullable();
+            $table->string('file')->nullable();
 
             });
         Schema::table('photos', function ($table) {
