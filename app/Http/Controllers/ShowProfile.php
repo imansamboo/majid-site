@@ -5,7 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
+use App\Content;
+use Illuminate\Support\Facades\Storage;
 
+//main page : https://www.cef.co.uk
+//sample real first page : https://www.cef.co.uk/catalogue/categories/data-networking
+//sample fake first : https://www.cef.co.uk/catalogue/categories/lamps-tubes-appliance-lamps
+//sample nonfirst : https://www.cef.co.uk/catalogue/categories/heating-ventilation-frost-watchers
+//sample belpowest : https://www.cef.co.uk/catalogue/products/4567841-500w-frost-protection-heater
 class ShowProfile extends Controller
 {
     /**
@@ -19,7 +26,7 @@ class ShowProfile extends Controller
         //
     }
 
-    public function test()
+    public function scrapRoots()
     {
         $client = new Client();
         $crawler = $client->request('GET', 'https://www.cef.co.uk/');
@@ -145,16 +152,27 @@ class ShowProfile extends Controller
 
     }
 
-    public function test4()
+    public function scrapSubbestPage($url, $menuID)
     {
         /*get subbest page*/
         $client = new Client();
-        $crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/products/1782065-15a-anti-vibration-fuse-sold-in-1-s');
-        print $crawler->filter('h1.details_page')->html() . '<br>';
-        print $crawler->filter('img.image-zoom')->attr('src');
-        print $crawler->filter('ul.product-codes')->html();
-        print $crawler->filter('ul#features')->html();
-        print $crawler->filter('div.overviewspec')->html();
+        $crawler = $client->request('GET', $url);
+        $contentHeader = $crawler->filter('h1.details_page')->html() . '<br>';
+        $contentSrc = $crawler->filter('img.image-zoom')->attr('src');
+        $contentPartStock = $crawler->filter('ul.product-codes')->html();
+        $contentLi = $crawler->filter('ul#features')->html();
+        $contentSpec = $crawler->filter('div.overviewspec')->html();
+        $content = new Content();
+        $content->Create(array(
+            'men_id' => $menuID,
+            'content_src' => $contentSrc,
+            'content_header' => $contentHeader,
+            'content_partstock' => $contentPartStock,
+            'content_li' => $contentLi,
+            'content_spec' => $contentSpec,
+
+        ));
+        $this->saveImage($menuID.'.jpg', $contentSrc);
         /* get sub menu has submenu*/
         /*$crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/cables-and-accessories-three-core-and-earth-pvc-cable-h6243y');
         $crawler->filter('h5.product_description')->each(function ($node) {
@@ -274,5 +292,31 @@ class ShowProfile extends Controller
         } else {
             echo 'no, this is not first';
         }
+    }
+
+    public function testScrapping($url, $menuName, $identity)
+    {
+    switch ($url) {
+        case 1:
+            $url = 'https://www.cef.co.uk';
+            break;
+        case 2:
+            $url = 'https://www.cef.co.uk/catalogue/categories/data-networking';
+            break;
+        case 3:
+            $url = 'https://www.cef.co.uk/catalogue/categories/lamps-tubes-appliance-lamps';
+            break;
+        case 4:
+            $url = 'https://www.cef.co.uk/catalogue/categories/heating-ventilation-frost-watchers';
+            break;
+        case 5:
+            $url = 'https://www.cef.co.uk/catalogue/products/4567841-500w-frost-protection-heater';
+            break;
+    }
+
+        if($identity == 1){
+            $this->scrapSubbestPage($url, $menuName);
+        }
+        $this->scrapRoots();
     }
 }

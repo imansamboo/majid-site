@@ -25,7 +25,16 @@ class Men extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'parent_name', 'urlMain', 'urlMy'];
+    protected $fillable = [
+        'partCode',
+        'stockCode',
+        'description',
+        'thumnailSrc',
+        'imgSrc',
+        'imgInnerSrc',
+        'header',
+        'degree',
+    ];
 
     
 }

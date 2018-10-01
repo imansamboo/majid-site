@@ -25,7 +25,14 @@ class Content extends Model
      *
      * @var array
      */
-    protected $fillable = ['content', 'men_id'];
+    protected $fillable = [
+        'men_id' ,
+        'content_src' ,
+        'content_header' ,
+        'content_partstock' ,
+        'content_li' ,
+        'content_spec' ,
+    ];
 
     
 }
