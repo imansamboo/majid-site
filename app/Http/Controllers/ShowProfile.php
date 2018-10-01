@@ -7,7 +7,7 @@ use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use App\Content;
 use Illuminate\Support\Facades\Storage;
-
+use App\Men;
 //main page : https://www.cef.co.uk
 //sample real first page : https://www.cef.co.uk/catalogue/categories/data-networking
 //sample fake first : https://www.cef.co.uk/catalogue/categories/lamps-tubes-appliance-lamps
@@ -28,23 +28,37 @@ class ShowProfile extends Controller
 
     public function scrapRoots()
     {
+        $men = new Men();
         $client = new Client();
         $crawler = $client->request('GET', 'https://www.cef.co.uk/');
-        $crawler->filter('a.divider-vertical')->each(function ($node) {
-            print $node->text() . "<br>";
-            print $node->attr('href') . "<br>";
-            print str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) . "<br>";
-            $node->siblings()->children()->each(function ($node) {
-                $node->children()->each(function ($node) {
-                    print $node->text() . "<br>";
-                    $node->children()->each(function ($node) {
-                        print $node->attr('href') . "<br>";
-                        print str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) . "<br>";
+        $crawler->filter('a.divider-vertical')->each(function ($node) use ($men) {
+            $menuName = $node->text() ;
+            $menuLink = $node->attr('href') ;
+            $myMenuLink = str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) ;
+            $men->Create(array(
+                'name' => $menuName,
+                'urlMain' => $menuLink,
+                'urlMy' => $myMenuLink,
+                'degree' => 0,
+                'parent_name' => 'root',
+
+            ));
+            $node->siblings()->children()->each(function ($node )  use ($men , $menuName) {
+                $node->children()->each(function ($node)  use ($men, $menuName) {
+                    $menuName2 = $node->text() ;
+                    $node->children()->each(function ($node) use ($menuName2, $men, $menuName) {
+                        $menuLink = $node->attr('href') ;
+                        $myMenuLink = str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) ;
+                        $men->Create(array(
+                            'name' => $menuName2,
+                            'urlMain' => $menuLink,
+                            'urlMy' => $myMenuLink,
+                            'degree' => 1,
+                            'parent_name' => $menuName,
+                        ));
                     });
                 });
             });
-            echo '<hr>';
-            echo '<hr>';
         });
 
     }
@@ -197,7 +211,7 @@ class ShowProfile extends Controller
         $i = 0;
         $j = 0;
 
-        //get general description abput sub menus
+        //get general description about sub menus
         $crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/cable-management-bench-trunking');
         //if is real first
         /*if($crawler->filter('div.marketing_text')->count() == 1){
