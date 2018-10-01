@@ -63,35 +63,95 @@ class ShowProfile extends Controller
 
     }
 
-    //this is a function for scraping menu pages and retrieving sub menus, picture source and part code
-    public function test2()
+    public function scrapRealFirstPage($url, $menuName = "Data & Networking")
     {
-        $client = new Client();
+        echo $menuName;
+        echo $url;
+        //$men = Men::where('name', '=', $menuName)->firstOrFail();
+        $men = new Men();
+        $parentName = $menuName;
         $count = 1;
-        $i = 0;
-        $j = 0;
-        $crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/incandescent-lamps-incandescent-candle-lamps?page=' . $i . '&per_page=12');
-
+        $i = 1;
+        $client = new Client();
+        $crawler = $client->request('GET', $url .'?page=' . $i);
+        $menuDescription = $crawler->filter('div.marketing_text')->text();
+        //get image source
+        $menuInnerImage = $crawler->filter('div.marketing_text')->previousAll()->attr('src');
+        //$this->saveImage($menuName. 'inner'.'.jpg', $thumbnailSrc);
         while ($count > 0) {
-            $crawler->filter('h5.product_description')->each(function ($node) {
-                //retrieve submenu name
-                print $node->text() . "<br>";
-                //retrieve submenu link
-                print $node->children()->attr('href') . "<br>";
-                print str_replace('https://www.cef.co.uk', url('/'), $node->children()->attr('href')) . "<br>";
-                //retrieve submenu part code
-                print $node->nextAll()->html();
-                //retrieve submenu stock code
-                print $node->nextAll()->nextAll()->html() . "<br>";
-                //retrieve submenu thumbnail brand
-                print $node->parents()->first()->previousAll()->filter('img.brand_thumb')->attr('src') . "<br>";
-                //retrieve submenu image in it's grid
-                print $node->parents()->first()->previousAll()->filter('div.grid_product_image >  img')->attr('src') . "<br>";
-                echo '<hr>';
-                echo '<hr>';
+            $crawler->filter('div.product_category_image > a')->each(function ($node) use ($parentName, $men) {
+                $menuLink = $node->attr('href');
+                $myMenuLink = str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) ;
+                $node->children()->each(function ($node) use ($parentName, $menuLink, $myMenuLink, $men){
+                    $imageSrc = $node->attr('src');
+                    $menuName = $node->attr('alt');
+                    Men::where('name' , $menuName)
+                        ->update(array(
+                        'imgSrc' => $imageSrc,
+                    ));
+                    $this->saveImage($menuName.'-img.jpg', $imageSrc);
+
+                });
             });
             $i++;
-            $crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/incandescent-lamps-incandescent-candle-lamps?page=' . $i . '&per_page=12');
+            $crawler = $client->request('GET', $url.'?page='  . $i . '&per_page=12');
+            $count = $crawler->filter('div.product_detail')->count();
+
+
+        }
+        Men::where('name', $parentName)
+        ->update([
+            'description' => $menuDescription,
+            'imgInnerSrc' => $menuInnerImage,
+        ]);
+        $this->saveImage($parentName.'-img-inner.jpg', $menuInnerImage);
+
+
+    }
+
+    //this is a function for scraping menu pages and retrieving sub menus, picture source and part code
+    public function scrapNonFirstPage($url, $menuName)
+    {
+        $men = new Men();
+        $client = new Client();
+        $parentName = $menuName;
+        $count = 1;
+        $i = 1;
+        $j = 0;
+        $crawler = $client->request('GET', $url.'?page=' . $i . '&per_page=12');
+
+        while ($count > 0) {
+            $crawler->filter('h5.product_description')->each(function ($node) use ($men, $menuName) {
+                //retrieve submenu name
+                $menuName = $node->text() ;
+                //retrieve submenu link
+                $menuLink = $node->children()->attr('href') ;
+                $myMenuLink = str_replace('https://www.cef.co.uk', url('/'), $node->children()->attr('href')) ;
+                //retrieve submenu part code
+                $menuPartCode = $node->nextAll()->html();
+                //retrieve submenu stock code
+                $menuStockCode = $node->nextAll()->nextAll()->html() ;
+                //retrieve submenu thumbnail brand
+                $thumbnailSrc = $node->parents()->first()->previousAll()->filter('img.brand_thumb')->attr('src') ;
+                //retrieve submenu image in it's grid
+                $imageSrc = $node->parents()->first()->previousAll()->filter('div.grid_product_image >  img')->attr('src') ;
+                $men->Create(array(
+                    'name' => $menuName,
+                    'urlMain' => $menuLink,
+                    'urlMy' => $myMenuLink,
+                    'partCode' => $menuPartCode,
+                    'stockCode' => $menuStockCode,
+                    'thumnailSrc' => $thumbnailSrc,
+                    'imgSrc' => $imageSrc,
+                    'degree' => 9,
+                    'parent_name' => $menuName,
+
+                ));
+                $this->saveImage($menuName. '-thumbnail'.'.jpg', $thumbnailSrc);
+                $this->saveImage($menuName. '-img'.'.jpg', $imageSrc);
+            });
+            $i++;
+            $crawler = $client->request('GET', $url.'?page=' . $i . '&per_page=12');
             $count = $crawler->filter('h5.product_description')->count();
 
         }
@@ -330,7 +390,15 @@ class ShowProfile extends Controller
 
         if($identity == 1){
             $this->scrapSubbestPage($url, $menuName);
+        }elseif ($identity == 2){
+            $this->scrapNonFirstPage($url, $menuName);
+        }elseif ($identity ==3 ){
+            $mens = Men::where('degree' , 0)->get();
+            foreach ($mens as $men){
+                $this->scrapRealFirstPage($url, $men->name);
+            }
+        }elseif ($identity ==0){
+            $this->scrapRoots();
         }
-        $this->scrapRoots();
     }
 }
