@@ -15,12 +15,13 @@ class CreateContentsTable extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->longText('content')->nullable();
             $table->integer('men_id')->unsigned()->nullable();
+            $table->string('content_src')->nullable();
+            $table->text('content_header')->nullable();
+            $table->text('content_partstock')->nullable();
+            $table->longText('content_li')->nullable();
+            $table->longText('content_spec')->nullable();
             });
-        Schema::table('contents', function ($table) {
-            $table->foreign('men_id')->references('id')->on('mens')->onDelete('cascade')->onUpdate('cascade');
-        });
 
     }
 

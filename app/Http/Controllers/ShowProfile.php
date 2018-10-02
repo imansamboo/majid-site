@@ -63,7 +63,7 @@ class ShowProfile extends Controller
 
     }
 
-    public function scrapRealFirstPage($url, $menuName = "Data & Networking")
+    public function scrapRealFirstPage($url, $menuName)
     {
         echo $menuName;
         echo $url;
@@ -95,7 +95,7 @@ class ShowProfile extends Controller
             });
             $i++;
             $crawler = $client->request('GET', $url.'?page='  . $i . '&per_page=12');
-            $count = $crawler->filter('div.product_detail')->count();
+            $count = $crawler->filter('div.marketing_text')->count();
 
 
         }
@@ -395,7 +395,7 @@ class ShowProfile extends Controller
         }elseif ($identity ==3 ){
             $mens = Men::where('degree' , 0)->get();
             foreach ($mens as $men){
-                $this->scrapRealFirstPage($url, $men->name);
+                $this->scrapRealFirstPage($men->urlMain, $men->name);
             }
         }elseif ($identity ==0){
             $this->scrapRoots();

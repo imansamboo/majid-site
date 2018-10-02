@@ -17,6 +17,15 @@ class CreateMensTable extends Migration
             $table->timestamps();
             $table->string('name')->nullable();
             $table->string('parent_name')->nullable();
+            $table->string('urlMain')->nullable();
+            $table->string('urlMy')->nullable();
+            $table->integer('degree')->nullable();
+            $table->string('imgSrc')->nullable();
+            $table->text('description')->nullable();
+            $table->string('imgInnerSrc')->nullable();
+            $table->text('partCode')->nullable();
+            $table->text('stockCode')->nullable();
+            $table->string('thumbnailSrc')->nullable();
             });
     }
 
