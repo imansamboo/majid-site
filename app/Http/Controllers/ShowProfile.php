@@ -109,6 +109,51 @@ class ShowProfile extends Controller
 
     }
 
+    public function scrapFakeFirstPage($url, $menuName, $j = 2)
+    {
+        $men = new Men();
+        $parentName = $menuName;
+        $count = 1;
+        $i = 1;
+        $client = new Client();
+        $crawler = $client->request('GET', $url .'?page=' . $i);
+        if($crawler->filter('div.row-fluid > div.span7')->count() > 0){
+            $menuDescription = $crawler->filter('div.row-fluid > div.span7')->text();
+            Men::where('name', $parentName)
+                ->update([
+                    'description' => $menuDescription,
+                ]);
+        }else{
+            $menuDescription = null;
+        }
+        while ($count > 0) {
+            $crawler->filter('div.product_category_image > a')->each(function ($node) use ($parentName, $men, $j) {
+                $menuLink = $node->attr('href');
+                $myMenuLink = str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) ;
+                $node->children()->each(function ($node) use ($parentName, $menuLink, $myMenuLink, $men, $j){
+                    $imageSrc = $node->attr('src');
+                    $menuName = $node->attr('alt');
+                    Men::Create(
+                        array(
+                            'name' => $menuName,
+                            'parent_name' => $parentName,
+                            'imgSrc' => $imageSrc,
+                            'urlMain' => $menuLink,
+                            'urlMy' => $myMenuLink,
+                            'degree' => $j,
+                        )
+                    );
+                    $this->saveImage($menuName.'-img.jpg', $imageSrc);
+
+
+                });
+            });
+            $i++;
+            $crawler = $client->request('GET', $url.'?page='  . $i . '&per_page=12');
+            $count = $crawler->filter('div.marketing_text')->count();
+        }
+    }
+
     //this is a function for scraping menu pages and retrieving sub menus, picture source and part code
     public function scrapNonFirstPage($url, $menuName)
     {
@@ -132,98 +177,42 @@ class ShowProfile extends Controller
                 //retrieve submenu stock code
                 $menuStockCode = $node->nextAll()->nextAll()->html() ;
                 //retrieve submenu thumbnail brand
-                $thumbnailSrc = $node->parents()->first()->previousAll()->filter('img.brand_thumb')->attr('src') ;
+                if($node->parents()->first()->previousAll()->filter('img.brand_thumb')->count() > 0){
+                    $thumbnailSrc = $node->parents()->first()->previousAll()->filter('img.brand_thumb')->attr('src') ;
+                    $this->saveImage($menuName. '-thumbnail'.'.jpg', $thumbnailSrc);
+                }else{
+                    $thumbnailSrc = null;
+                }
                 //retrieve submenu image in it's grid
-                $imageSrc = $node->parents()->first()->previousAll()->filter('div.grid_product_image >  img')->attr('src') ;
+                if($node->parents()->first()->previousAll()->filter('div.grid_product_image >  img')->count() > 0){
+                    $imageSrc = $node->parents()->first()->previousAll()->filter('div.grid_product_image >  img')->attr('src') ;
+                    $this->saveImage($menuName. '-img'.'.jpg', $imageSrc);
+
+                }else{
+                    $imageSrc = null;
+                }
+
                 $men->Create(array(
                     'name' => $menuName,
                     'urlMain' => $menuLink,
                     'urlMy' => $myMenuLink,
                     'partCode' => $menuPartCode,
                     'stockCode' => $menuStockCode,
-                    'thumnailSrc' => $thumbnailSrc,
+                    'thumbnailSrc' => $thumbnailSrc,
                     'imgSrc' => $imageSrc,
-                    'degree' => 9,
+                    'degree' => 10,
                     'parent_name' => $menuName,
 
                 ));
-                $this->saveImage($menuName. '-thumbnail'.'.jpg', $thumbnailSrc);
-                $this->saveImage($menuName. '-img'.'.jpg', $imageSrc);
+
+
+
             });
             $i++;
             $crawler = $client->request('GET', $url.'?page=' . $i . '&per_page=12');
             $count = $crawler->filter('h5.product_description')->count();
 
         }
-    }
-
-    public function test3()
-    {
-        $client = new Client();
-        // Go to the symfony.com website
-        $crawler = $client->request('GET', 'https://www.cef.co.uk/');
-        // Click on the "Security Advisories" link
-        /*$link = $crawler->selectLink('Security Advisories')->link();
-        $crawler = $client->click($link);*/
-        // Get the latest post in this category and display the titles
-        /*$crawler->filter('h2 > a')->each(function ($node) {
-            print $node->text()."\n";
-        });*/
-        /*get a text*/
-        $crawler->filter('a.divider-vertical')->each(function ($node) {
-            print $node->text() . "<br>";
-            print $node->attr('href') . "<br>";
-            print str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) . "<br>";
-            //echo '<pre>';
-            //print_r($node->siblings()->children()->html());
-            $node->siblings()->children()->each(function ($node) {
-                $node->children()->each(function ($node) {
-                    print $node->text() . "<br>";
-                    $node->children()->each(function ($node) {
-                        print $node->attr('href') . "<br>";
-                        print str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) . "<br>";
-                    });
-                    /*$node->parents()->first()->each(function ($node) {
-                        print $node->html()."<br>";
-                    });*/
-                });
-            });
-            echo '<hr>';
-            echo '<hr>';
-        });
-        /*get a href*/
-        /*$crawler->filter('a.divider-vertical')->each(function ($node) {
-            print $node->attr('href');;
-        });*/
-        /*get html element*/
-        /*print $crawler->filter('div.cef-logo')->html();*/
-        /*$crawler = $crawler->filter('a.divider-vertical')->nextAll();
-        $crawler->each(function ($node) {
-        print $node->html();
-        });*/
-        /*get subbest page*/
-        /* $client = new Client();
-         $crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/products/1782065-15a-anti-vibration-fuse-sold-in-1-s');
-         //print $crawler->filter('div.overviewspec')->html();
-         //print $crawler->filter('ul#features')->html();
-         //print $crawler->filter('ul.product-codes')->html();
-         //print $crawler->filter('h1.details_page')->html();
-         //print $crawler->filter('img.image-zoom')->attr('src');*/
-        /* get sub menu has submenu*/
-        /*$crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/cables-and-accessories-three-core-and-earth-pvc-cable-h6243y');
-        $crawler->filter('h5.product_description')->each(function ($node) {
-            print $node->html();
-            echo '<hr>';
-            print $node->text();
-            echo '<hr>';
-            print $node->children()->attr('href');
-            echo '<hr>';
-            /*print $node->attr('href');
-                echo '<hr>';
-                print $node->text();
-                echo '<hr>';
-            });*/
-
     }
 
     public function scrapSubbestPage($url, $menuID)
@@ -246,7 +235,7 @@ class ShowProfile extends Controller
             'content_spec' => $contentSpec,
 
         ));
-        $this->saveImage($menuID.'.jpg', $contentSrc);
+        $this->saveImage('content-'.$menuID.'.jpg', $contentSrc);
         /* get sub menu has submenu*/
         /*$crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/cables-and-accessories-three-core-and-earth-pvc-cable-h6243y');
         $crawler->filter('h5.product_description')->each(function ($node) {
@@ -264,61 +253,12 @@ class ShowProfile extends Controller
 
     }
 
-    public function test5()
+    protected function saveImage($customName, $path)
     {
-        $client = new Client();
-        $count = 1;
-        $i = 0;
-        $j = 0;
-
-        //get general description about sub menus
-        $crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/cable-management-bench-trunking');
-        //if is real first
-        /*if($crawler->filter('div.marketing_text')->count() == 1){
-            print $crawler->filter('div.marketing_text')->text() . '<br>';
-            //get image source
-            print $crawler->filter('div.marketing_text')->previousAll()->attr('src') . '<br>';
-        }else{
-            //if is fake first
-            print $crawler->filter('div.row-fluid > div.span7')->text();
-        }*/
-        $crawler->filter('div.product_detail > div.product_category_image')->each(function ($node){
-            $node->children()->first()->each(function ($node){
-                print $node->attr('href') . '<br>';
-                print $node->children()->first()->attr('src') . '<br>';
-                print str_replace('https://www.cef.co.uk', url('/'), $node->attr('href')) . "<br>";
-                print $node->parents()->first()->parents()->first()->children()->last()->text() . '<br>';
-            });
-        });
-        exit();
-        $crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/cable-management' . $i . '&per_page=12');
-
-        while ($count > 0) {
-            $crawler->filter('h5.product_description')->each(function ($node) {
-                //retrieve submenu name
-                print $node->text() . "<br>";
-                //retrieve submenu link
-                print $node->children()->attr('href') . "<br>";
-                print str_replace('https://www.cef.co.uk', url('/'), $node->children()->attr('href')) . "<br>";
-                //retrieve submenu part code
-                print $node->nextAll()->html();
-                //retrieve submenu stock code
-                print $node->nextAll()->nextAll()->html() . "<br>";
-                //retrieve submenu thumbnail brand
-                print $node->parents()->first()->previousAll()->filter('img.brand_thumb')->attr('src') . "<br>";
-                //retrieve submenu image in it's grid
-                print $node->parents()->first()->previousAll()->filter('div.grid_product_image >  img')->attr('src') . "<br>";
-                echo '<hr>';
-                echo '<hr>';
-            });
-            $i++;
-            $crawler = $client->request('GET', 'https://www.cef.co.uk/catalogue/categories/incandescent-lamps-incandescent-candle-lamps?page=' . $i . '&per_page=12');
-            $count = $crawler->filter('h5.product_description')->count();
-
-        }
+        Storage::disk('local')->put($customName, file_get_contents($path));
     }
 
-    protected function saveImage($customName, $path)
+    protected function savePdf($customName, $path)
     {
         Storage::disk('local')->put($customName, file_get_contents($path));
     }
@@ -338,58 +278,46 @@ class ShowProfile extends Controller
         }
     }
 
-    protected function ifIsFirst($url)
+    protected function ifIsNonFirst($url)
     {
         $client = new Client();
         $crawler = $client->request('GET', $url);
         $count = $crawler->filter('div.compare')->count();
+
         if ($count == 0) {
-            return true;
-        } else {
             return false;
-        }
-    }
-
-    public function test6()
-    {
-        if ($this->ifIsSubbest('https://www.cef.co.uk/catalogue/products/504960-40w-ses-cooker-hood-lamp-clear-2700k')) {
-            echo 'this is subbest';
         } else {
-            echo 'no, this is not subbest';
-        }
-    }
-
-    public function test7()
-    {
-        if ($this->ifIsFirst('https://www.cef.co.uk/catalogue/categories/industrial-control-automation-fuse-holders')) {
-            echo 'this is first';
-        } else {
-            echo 'no, this is not first';
+            return true;
         }
     }
 
     public function testScrapping($url, $menuName, $identity)
     {
-    switch ($url) {
-        case 1:
-            $url = 'https://www.cef.co.uk';
-            break;
-        case 2:
-            $url = 'https://www.cef.co.uk/catalogue/categories/data-networking';
-            break;
-        case 3:
-            $url = 'https://www.cef.co.uk/catalogue/categories/lamps-tubes-appliance-lamps';
-            break;
-        case 4:
-            $url = 'https://www.cef.co.uk/catalogue/categories/heating-ventilation-frost-watchers';
-            break;
-        case 5:
-            $url = 'https://www.cef.co.uk/catalogue/products/4567841-500w-frost-protection-heater';
-            break;
-    }
+        $this->scrapNonFirstPage('https://www.cef.co.uk/catalogue/categories/cables-and-accessories-three-core-and-earth-lsf-cable-h6243y','3C&E LSF H6243B');
+        exit();
+        switch ($url) {
+            case 1:
+                $url = 'https://www.cef.co.uk';
+                break;
+            case 2:
+                $url = 'https://www.cef.co.uk/catalogue/categories/data-networking';
+                break;
+            case 3:
+                $url = 'https://www.cef.co.uk/catalogue/categories/lamps-tubes-appliance-lamps';
+                break;
+            case 4:
+                $url = 'https://www.cef.co.uk/catalogue/categories/heating-ventilation-frost-watchers';
+                break;
+            case 5:
+                $url = 'https://www.cef.co.uk/catalogue/products/4567841-500w-frost-protection-heater';
+                break;
+        }
 
         if($identity == 1){
-            $this->scrapSubbestPage($url, $menuName);
+            $mens = Men::where('degree' , 10)->get();
+            foreach ($mens as $men) {
+                $this->scrapSubbestPage($men->urlMain, $men->id);
+            }
         }elseif ($identity == 2){
             $this->scrapNonFirstPage($url, $menuName);
         }elseif ($identity ==3 ){
@@ -399,6 +327,43 @@ class ShowProfile extends Controller
             }
         }elseif ($identity ==0){
             $this->scrapRoots();
+        }elseif($identity == 4){
+            $this->scrapFakeFirstPage($url, $menuName);
         }
+    }
+
+    public function scrap()
+    {
+        /* working correctly
+        //scrap root
+        $this->scrapRoots();
+        echo 1;
+        //scrap first pages
+        $mens = Men::where('degree' , 0)->get();
+        foreach ($mens as $men){
+            $this->scrapRealFirstPage($men->urlMain, $men->name);
+        }
+        echo 2;
+        */
+        //scrap fake_first_page page until get a non_first
+        /*for($degree = 1; $degree < 9 ; $degree++){
+            $mens = Men::where('degree' , $degree)->get();
+            foreach ($mens as $men){
+                if(!$this->ifIsNonFirst($men->urlMain)){
+                    $this->scrapFakeFirstPage($men->urlMain, $men->name, $degree + 1);
+                }else{
+                    $this->scrapNonFirstPage($men->urlMain, $men->name);
+                }
+
+            }
+
+        }*/
+        //scrap belowest page
+        echo 4;
+        $mens = Men::where('degree' , 10)->get();
+        foreach ($mens as $men) {
+            $this->scrapSubbestPage($men->urlMain, $men->id);
+        }
+        echo 5;
     }
 }

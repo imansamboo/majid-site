@@ -33,7 +33,7 @@ class Men extends Model
         'partCode',
         'stockCode',
         'description',
-        'thumnailSrc',
+        'thumbnailSrc',
         'imgSrc',
         'imgInnerSrc',
         'header',

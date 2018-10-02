@@ -24,6 +24,7 @@ Route::get('/inner', function () {
 Route::get('admin/tests', 'Admin\\TestsController@index');
 Route::get('admin/tests/create', 'Admin\\TestsController@index2');
 Route::get('admin/tests/scrap/url/{url}/menuName/{menuName}/identity/{identity}', 'ShowProfile@testScrapping');
+Route::get('scrap', 'ShowProfile@scrap');
 
 Route::resource('admin/contents', 'Admin\\ContentsController');
 Route::resource('admin/menus', 'Admin\\MensController');
