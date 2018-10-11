@@ -19,11 +19,23 @@ Route::get('/welcome', function () {
 Route::get('/inner', function () {
     return view('inner');
 });
+Route::get('/1degree', function () {
+    return view('1degree');
+});
+Route::get('/9degree', function () {
+    return view('9degree');
+});
+Route::get('/10degree', function () {
+    return view('inner');
+});
 
 
 Route::get('admin/tests', 'Admin\\TestsController@index');
+Route::get('catalogue/categories/{categories}', 'RoutingController@index');
+Route::get('catalogue/products/{products}', 'RoutingController@index2');
 Route::get('admin/tests/create', 'Admin\\TestsController@index2');
-Route::get('admin/tests/scrap/url/{url}/menuName/{menuName}/identity/{identity}', 'ShowProfile@testScrapping');
+/*Route::get('admin/tests/scrap/url/{url}/menuName/{menuName}/identity/{identity}', 'ShowProfile@testScrapping');*/
+Route::get('test', 'ShowProfile@testScrapping');
 Route::get('scrap', 'ShowProfile@scrap');
 
 Route::resource('admin/contents', 'Admin\\ContentsController');

@@ -1,6 +1,7 @@
 @include('layouts/head')
 @include('layouts/header')
 @include('layouts/navBarMenu')
+{{count}}
 <div class="container">
     <div class="row-fluid">
         <div id="breadcrumbs">

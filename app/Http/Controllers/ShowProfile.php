@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use App\Content;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Men;
 //main page : https://www.cef.co.uk
@@ -166,7 +167,7 @@ class ShowProfile extends Controller
         $crawler = $client->request('GET', $url.'?page=' . $i . '&per_page=12');
 
         while ($count > 0) {
-            $crawler->filter('h5.product_description')->each(function ($node) use ($men, $menuName) {
+            $crawler->filter('h5.product_description')->each(function ($node) use ($men, $parentName) {
                 //retrieve submenu name
                 $menuName = $node->text() ;
                 //retrieve submenu link
@@ -179,14 +180,14 @@ class ShowProfile extends Controller
                 //retrieve submenu thumbnail brand
                 if($node->parents()->first()->previousAll()->filter('img.brand_thumb')->count() > 0){
                     $thumbnailSrc = $node->parents()->first()->previousAll()->filter('img.brand_thumb')->attr('src') ;
-                    $this->saveImage($menuName. '-thumbnail'.'.jpg', $thumbnailSrc);
+                    //$this->saveImage($menuName. '-thumbnail'.'.jpg', $thumbnailSrc);
                 }else{
                     $thumbnailSrc = null;
                 }
                 //retrieve submenu image in it's grid
                 if($node->parents()->first()->previousAll()->filter('div.grid_product_image >  img')->count() > 0){
                     $imageSrc = $node->parents()->first()->previousAll()->filter('div.grid_product_image >  img')->attr('src') ;
-                    $this->saveImage($menuName. '-img'.'.jpg', $imageSrc);
+                    //$this->saveImage($menuName. '-img'.'.jpg', $imageSrc);
 
                 }else{
                     $imageSrc = null;
@@ -201,7 +202,7 @@ class ShowProfile extends Controller
                     'thumbnailSrc' => $thumbnailSrc,
                     'imgSrc' => $imageSrc,
                     'degree' => 10,
-                    'parent_name' => $menuName,
+                    'parent_name' => $parentName,
 
                 ));
 
@@ -291,9 +292,9 @@ class ShowProfile extends Controller
         }
     }
 
-    public function testScrapping($url, $menuName, $identity)
+    public function testScrapping($url = null, $menuName = null, $identity = null)
     {
-        $this->scrapNonFirstPage('https://www.cef.co.uk/catalogue/categories/cables-and-accessories-three-core-and-earth-lsf-cable-h6243y','3C&E LSF H6243B');
+        $this->scrapOneItem('https://www.cef.co.uk/catalogue/products/4479858-roughneck-compression-work-boot-socks-twin-pack');
         exit();
         switch ($url) {
             case 1:
@@ -334,9 +335,9 @@ class ShowProfile extends Controller
 
     public function scrap()
     {
-        /* working correctly
+        ini_set('max_execution_time', 18000);
         //scrap root
-        $this->scrapRoots();
+    /*    $this->scrapRoots();
         echo 1;
         //scrap first pages
         $mens = Men::where('degree' , 0)->get();
@@ -344,26 +345,100 @@ class ShowProfile extends Controller
             $this->scrapRealFirstPage($men->urlMain, $men->name);
         }
         echo 2;
-        */
-        //scrap fake_first_page page until get a non_first
-        /*for($degree = 1; $degree < 9 ; $degree++){
-            $mens = Men::where('degree' , $degree)->get();
-            foreach ($mens as $men){
-                if(!$this->ifIsNonFirst($men->urlMain)){
-                    $this->scrapFakeFirstPage($men->urlMain, $men->name, $degree + 1);
-                }else{
-                    $this->scrapNonFirstPage($men->urlMain, $men->name);
-                }
 
+        //scrap fake_first_page page until get a non_first
+
+        $mens = Men::where('degree' , 1)->get();
+        foreach ($mens as $men){
+            if(!$this->ifIsNonFirst($men->urlMain)){
+                $this->scrapFakeFirstPage($men->urlMain, $men->name, 2);
             }
+        }*/
+        /*$mens = Men::where('degree' , 2)->get();
+        foreach ($mens as $men){
+            if(!$this->ifIsNonFirst($men->urlMain)){
+                $this->scrapFakeFirstPage($men->urlMain, $men->name, 3);
+            }
+        }*/
+
+        /*$mens = Men::where('degree' , 3)->get();
+        foreach ($mens as $men){
+                $this->scrapNonFirstPage($men->urlMain, $men->name);
 
         }*/
+        /*$mens = DB::table('mens')->select(['parent_name'])->where('degree', 3)->groupBy('parent_name')->get();
+        $menDegree2Scrapped = array();
+        foreach ($mens as $men) {
+            $menDegree2Scrapped[] = $men->parent_name;
+        }
+        $menDegree2 = array();
+        $mens = DB::table('mens')->select(['name'])->where('degree', 2)->get();
+        foreach ($mens as $men){
+            $menDegree2[] = $men->name ;
+        }
+        $mens = array();
+        $mensDegree2NonScrapped = array_diff($menDegree2, $menDegree2Scrapped);
+        foreach ($mensDegree2NonScrapped as $menDegree2NonScrapped){
+            $mens['name'][] = $menDegree2NonScrapped;
+            $mens['url'][] = Men::where('name' , $menDegree2NonScrapped)->get()[0]->urlMain;
+        }
+        $i = 0;
+        foreach($mens['name'] as $name){
+            //echo $name . '<br>';
+            //echo $mens['url'][$i] . '<br>';
+            $this->scrapNonFirstPage($mens['url'][$i], $name);
+            $i++;*/
+
+            /*--------------------------------------------------------*/
+            /*$mens = DB::table('mens')->select(['parent_name'])->where('degree', 2)->groupBy('parent_name')->get();
+            $menDegree2Scrapped = array();
+            foreach ($mens as $men) {
+                $menDegree2Scrapped[] = $men->parent_name;
+            }
+            $menDegree2 = array();
+            $mens = DB::table('mens')->select(['name'])->where('degree', 1)->groupBy('name')->get();
+            foreach ($mens as $men){
+                $menDegree2[] = $men->name ;
+            }
+            $mens = array();
+            $mensDegree2NonScrapped = array_diff($menDegree2, $menDegree2Scrapped);
+            foreach ($mensDegree2NonScrapped as $menDegree2NonScrapped){
+                $mens['name'][] = $menDegree2NonScrapped;
+                $mens['url'][] = Men::where('name' , $menDegree2NonScrapped)->get()[0]->urlMain;
+            }
+            $i = 0;
+            foreach($mens['name'] as $name){
+                //echo $name . '<br>';
+                //echo $mens['url'][$i] . '<br>';
+                $this->scrapNonFirstPage($mens['url'][$i], $name);
+                $i++;
+
+        }*/
+
         //scrap belowest page
         echo 4;
         $mens = Men::where('degree' , 10)->get();
+        $i=0;
         foreach ($mens as $men) {
-            $this->scrapSubbestPage($men->urlMain, $men->id);
+            if( $i < 5000 && $i > 1999){
+                $this->scrapSubbestPage($men->urlMain, $men->id);
+            }
+            $i++;
         }
         echo 5;
     }
+    public function scrapOneItem($url)
+    {
+        $menu = Men::where('urlMain' , $url)->get()[0];
+        $men_id = $menu->id;
+        $count = Content::where('men_id' , $men_id)->count();
+
+
+        if($count == 0)
+        {
+            $this->scrapSubbestPage($url, Men::where('urlMain' , $url)->get()[0]->id);
+        }
+
+    }
+
 }

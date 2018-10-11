@@ -1,6 +1,8 @@
 <?php echo $__env->make('layouts/head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php echo $__env->make('layouts/header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php echo $__env->make('layouts/navBarMenu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo e(menu); ?>
+
 <div class="container">
     <div class="row-fluid">
         <div id="breadcrumbs">
