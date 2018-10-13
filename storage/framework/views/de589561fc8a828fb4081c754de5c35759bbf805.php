@@ -10,7 +10,7 @@
                     <img alt="Specific" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/specific-a5c19da055a77ea4c2c75ede1c9db275.svg" />
                 </a></div>
             <div class='span4'>
-                <a href="#https://www.cef.co.uk/catalogue/brands" class="m-badge red">Product search by Brand
+                <a href="http://127.0.0.1:8000/catalogue/brands" class="m-badge red">Product search by Brand
                     <img alt="Brand" class="brand" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/brand-d8acf6ea8632057e8878031934195441.svg" />
                 </a></div>
         </div>

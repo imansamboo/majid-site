@@ -1,7 +1,6 @@
 @include('layouts/head')
 @include('layouts/header')
 @include('layouts/navBarMenu')
-{{$subMenuCount}}
 <div class="container">
     <div class="row-fluid">
         <div class="row-fluid">
@@ -38,7 +37,7 @@ Appliance Lamps
             <div class="main_content span12">
 
 
-                <h1 class="blockyheading margin-bottom">Cooker Hood Lamps</h1>
+                <h1 class="blockyheading margin-bottom">{{$menuName}}</h1>
                 <div id="search_holder">
                     <div class="filters span3" id="filters">
                         <script>
@@ -344,81 +343,57 @@ Appliance Lamps
                             </div>
                         </div>
                         <div class="row-fluid">
-                            <form accept-charset="UTF-8" action="https://www.cef.co.uk/catalogue/products/compare" class="new_compare" id="new_compare" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"></div><div id="products">
-                                    <div class="row-fluid" id="grid_products">
-                                        <ul class="thumbnails uniform">
-                                            <div class="span3">
-                                                <li>
-                                                    <div class="thumbnail text-center product_grid" style="height: 485px;">
-                                                        <a href="https://www.cef.co.uk/catalogue/products/504960-40w-ses-cooker-hood-lamp-clear-2700k"><img alt="Bell" class="brand_thumb" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/images/brands/thumbnail/bell-lighting-logo-png_80bda6d3c9d6007cdc28e146a2d1c947.png?1523622410">
-                                                            <div class="clearfix"></div>
-                                                            <br>
-                                                            <br>
-                                                            <br>
-                                                            <div class="grid_product_image">
-                                                                <img alt="40W SES Cooker Hood Lamp Clear 2700K" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/images/products/small/bell_02430-a_41d05cd48f25871641bf3d0dbba92b6a.jpg?1467710845">
+                            <form accept-charset="UTF-8" action="https://www.cef.co.uk/catalogue/products/compare" class="new_compare" id="new_compare" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"></div>
+                                @for ($i = 0; $i < $gridNumber; $i++)
+                                    <div id="products">
+                                        <div class="row-fluid" id="grid_products">
+                                            <ul class="thumbnails uniform">
+                                                {{--@php
+                                                if($i == $gridNumber - 1){
+                                                    $innerLoop = $rest;
+                                                }else{
+                                                     $innerLoop = 4;
+                                                }
+                                                @endphp--}}
+                                                @for ($j = 0; $j < 4; $j++)
+                                                    @if(4*$i + $j  < $subMenuCount)
+                                                <div class="span3">
+                                                    <li>
+                                                        <div class="thumbnail text-center product_grid" style="height: 485px;">
+                                                            <a href="{{$subMenus[4*$i + $j ]->urlMy}}"><img alt="Bell" class="brand_thumb" src="{{$subMenus[4*$i + $j ]->thumbnailSrc}}">
+                                                                <div class="clearfix"></div>
+                                                                <br>
+                                                                <br>
+                                                                <br>
+                                                                <div class="grid_product_image">
+                                                                    <img alt="{{$subMenus[4*$i + $j ]->name}}" src="{{$subMenus[4*$i + $j ]->imgSrc}}">
+                                                                </div>
+                                                            </a>
+                                                            <div class="text-left caption">
+                                                                <h5 class="product_description"><a href="{{$subMenus[4*$i + $j ]->urlMy}}">{{$subMenus[4*$i + $j ]->name}}</a></h5>
+                                                                <p class="product_code">
+                                                                    {!! $subMenus[4*$i + $j ]->partCode !!}
+                                                                </p>
+                                                                <p class="product_code">
+                                                                    {!! $subMenus[4*$i + $j ]->stockCode !!}
+                                                                </p>
+                                                                <div class="clearfix"></div>
+                                                                <br>
                                                             </div>
-                                                        </a><div class="text-left caption">
-                                                            <h5 class="product_description"><a href="https://www.cef.co.uk/catalogue/products/504960-40w-ses-cooker-hood-lamp-clear-2700k">Bell 40W SES Cooker Hood Lamp Clear 2700K</a></h5>
-                                                            <p class="product_code">
-                                                                <span class="muted">Part Code:</span>
-                                                                <br>
-                                                                <span>02430</span>
-                                                                <br>
-                                                            </p>
-                                                            <p class="product_code">
-                                                                <span class="muted">Stock Code:</span>
-                                                                <br>
-                                                                <span>0148-2148</span>
-                                                            </p>
-                                                            <div class="clearfix"></div>
-                                                            <br>
-                                                        </div>
-                                                        <div class="compare">
-                                                            <div class="pull-left">Compare</div>
-                                                            <input class="pull-right" id="products_" name="products[]" value="504960" type="checkbox">
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </div>
-                                            <div class="span3">
-                                                <li>
-                                                    <div class="thumbnail text-center product_grid" style="height: 485px;">
-                                                        <a href="https://www.cef.co.uk/catalogue/products/4024919-40w-ses-cooker-hood-lamp"><img alt="Fusion" class="brand_thumb" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/images/brands/thumbnail/fusion_logo_6b8600b2035693e2ada1411d2e7ed7d1.png?1391783132">
-                                                            <div class="clearfix"></div>
-                                                            <br>
-                                                            <br>
-                                                            <br>
-                                                            <div class="grid_product_image">
-                                                                <img alt="40W SES Cooker Hood Lamp Clear 2700K" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/images/products/small/cefco_edhood40ses_640dd8a0d3731693a59e4d47ea68197b.jpg?1514996978">
+                                                            <div class="compare">
+                                                                <div class="pull-left">Compare</div>
+                                                                <input class="pull-right" id="products_" name="products[]" value="504960" type="checkbox">
                                                             </div>
-                                                        </a><div class="text-left caption">
-                                                            <h5 class="product_description"><a href="https://www.cef.co.uk/catalogue/products/4024919-40w-ses-cooker-hood-lamp">Fusion 40W SES Cooker Hood Lamp Clear 2700K</a></h5>
-                                                            <p class="product_code">
-                                                                <span class="muted">Part Code:</span>
-                                                                <br>
-                                                                <span>EDHOOD40SES</span>
-                                                                <br>
-                                                            </p>
-                                                            <p class="product_code">
-                                                                <span class="muted">Stock Code:</span>
-                                                                <br>
-                                                                <span>1607-6983</span>
-                                                            </p>
-                                                            <div class="clearfix"></div>
-                                                            <br>
                                                         </div>
-                                                        <div class="compare">
-                                                            <div class="pull-left">Compare</div>
-                                                            <input class="pull-right" id="products_" name="products[]" value="4024919" type="checkbox">
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </div>
-
-                                        </ul>
+                                                    </li>
+                                                </div>
+                                                    @endif
+                                            @endfor
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
+                                @endfor
+
                             </form>
 
                         </div>

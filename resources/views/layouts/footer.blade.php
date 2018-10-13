@@ -10,16 +10,16 @@
                                     Customer Service
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/contact_us">Contact Us</a>
+                                    <a href="http://127.0.0.1:8000/contact_us">Contact Us</a>
                                 </li>
                                 <li>
                                     <a href="#Javascript:var sURL=&#x27;https://prod3ci.click4assistance.co.uk/Default.aspx?AccountGUID=1a31c22f-633d-4c5f-9887-9b811d47cadd&amp;WebsiteGUID=163cc9d6-297e-422b-bc31-fd91a2b7f9a0&amp;WorkflowGUID=11b6ae63-32e2-47f9-97f5-89fed52b1e19&amp;Origin=&#x27;+ location.href +# &#x27;&amp;Referrer=&#x27; + document.referrer; var sTHID = (typeof C4A_TB == &#x27;object&#x27;) ? &#x27;&amp;THID=&#x27; + C4A_TB.getTHID() : &#x27;&amp;THID=&#x27;; var x=window.open(sURL+sTHID,&#x27;_blank&#x27;,&#x27;menubar=no,location=no,resizable=no,scrollbars=auto,status=no&#x27;);">Online Chat</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/about_us/national_accounts">National Accounts</a>
+                                    <a href="http://127.0.0.1:8000/about_us/national_accounts">National Accounts</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/request_a_call_back">Request a Call-Back</a>
+                                    <a href="http://127.0.0.1:8000/request_a_call_back">Request a Call-Back</a>
                                 </li>
                             </ul>
                         </div>
@@ -29,28 +29,28 @@
                                     Company Info
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/about_us">About Us</a>
+                                    <a href="http://127.0.0.1:8000/about_us">About Us</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/branches">Branch Locator</a>
+                                    <a href="http://127.0.0.1:8000/branches">Branch Locator</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/news">Latest News</a>
+                                    <a href="http://127.0.0.1:8000/news">Latest News</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/blog">Blog</a>
+                                    <a href="http://127.0.0.1:8000/blog">Blog</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/sitemap">Sitemap</a>
+                                    <a href="http://127.0.0.1:8000/sitemap">Sitemap</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/careers/information">Careers</a>
+                                    <a href="http://127.0.0.1:8000/careers/information">Careers</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/media">Media</a>
+                                    <a href="http://127.0.0.1:8000/media">Media</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/gender-pay-gap">Gender Pay Gap</a>
+                                    <a href="http://127.0.0.1:8000/gender-pay-gap">Gender Pay Gap</a>
                                 </li>
                             </ul>
                         </div>
@@ -60,13 +60,13 @@
                                     Services
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/services/energy_saving">Energy Saving Surveys</a>
+                                    <a href="http://127.0.0.1:8000/services/energy_saving">Energy Saving Surveys</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/services/lighting_design">Lighting Design Surveys</a>
+                                    <a href="http://127.0.0.1:8000/services/lighting_design">Lighting Design Surveys</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/electricalwaste">Electrical Waste</a>
+                                    <a href="http://127.0.0.1:8000/electricalwaste">Electrical Waste</a>
                                 </li>
                             </ul>
                         </div>
@@ -76,19 +76,19 @@
                                     Terms and Conditions
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/about_us/returns_policy">Returns Policy</a>
+                                    <a href="http://127.0.0.1:8000/about_us/returns_policy">Returns Policy</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/info/terms_and_conditions">Terms and Conditions</a>
+                                    <a href="http://127.0.0.1:8000/info/terms_and_conditions">Terms and Conditions</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/info/website_terms_of_use">Website Terms Of Use</a>
+                                    <a href="http://127.0.0.1:8000/info/website_terms_of_use">Website Terms Of Use</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/info/privacy_policy">Privacy Policy</a>
+                                    <a href="http://127.0.0.1:8000/info/privacy_policy">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="#https://www.cef.co.uk/slavery-trafficking-policy">Modern Slavery Policy</a>
+                                    <a href="http://127.0.0.1:8000/slavery-trafficking-policy">Modern Slavery Policy</a>
                                 </li>
                             </ul>
                         </div>
@@ -109,12 +109,12 @@
                 </div>
                 <div class='row-fluid visible-phone'>
                     <div class='span12'>
-                        <a href="#https://www.cef.co.uk/contact_us" class="contact-us"><img alt="Email-white" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/email-white-22de1af22ca1693094cd567232cfd353.svg" />
+                        <a href="http://127.0.0.1:8000/contact_us" class="contact-us"><img alt="Email-white" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/email-white-22de1af22ca1693094cd567232cfd353.svg" />
                             Contact Us
                         </a></div>
                 </div>
                 <hr>
-                <a href="#https://www.cef.co.uk/session/new" class="sign-in visible-phone">Sign In
+                <a href="http://127.0.0.1:8000/session/new" class="sign-in visible-phone">Sign In
                 </a>
                 <div class='row-fluid copyright-notice'>
                     <div class='span9'>

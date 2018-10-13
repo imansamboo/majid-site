@@ -1,5 +1,4 @@
 <body class='categories-show'>
-
 <div class='quick-info-bar'>
     <div class='container'>
         <div class='national-details'>
@@ -11,12 +10,12 @@
         </div>
         <div class='visible-phone'>
             <div class='branches'>
-                <a href="#https://www.cef.co.uk/branches/directory"><img alt="Marker-white" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/marker-white-919412db8bfad08de017454d89de260c.svg" />
+                <a href="http://127.0.0.1:8000/branches/directory"><img alt="Marker-white" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/marker-white-919412db8bfad08de017454d89de260c.svg" />
                     Branches
                 </a></div>
         </div>
         <div class='sign-out'>
-            <a href="#https://www.cef.co.uk/session/new">Sign in
+            <a href="http://127.0.0.1:8000/session/new">Sign in
                 <img alt="Sign-in-white" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/sign-in-white-f7bea1911a4dbdcdb4d514e65b1b9881.svg" />
             </a></div>
     </div>
@@ -28,7 +27,7 @@
             <header>
                 <section>
                     <div class='cef-logo'>
-                        <a href="#https://www.cef.co.uk/"><picture>
+                        <a href="http://127.0.0.1:8000/"><picture>
                                 <source media='(min-width: 737px)' srcset='https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/cef-logo-strapline-be00e4af53d0c24bd76aa7ffca847290.svg'>
 
                             </picture>
@@ -50,7 +49,7 @@
 
                     <div class='cef-site-search'>
                         <div class='find-a-branch hidden-phone hidden-tablet'>
-                            <a href="#https://www.cef.co.uk/branches"><img alt="Marker-red" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/marker-red-7e5a2a1e63ae4c1590f78f10a77d5d06.svg" />
+                            <a href="http://127.0.0.1:8000/branches"><img alt="Marker-red" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/marker-red-7e5a2a1e63ae4c1590f78f10a77d5d06.svg" />
                                 Find a Branch
                             </a></div>
                         <div class='online-chat hidden-phone hidden-tablet'>
@@ -78,7 +77,7 @@
                             </a>
                         </section>
                         <section>
-                            <a href="#https://www.cef.co.uk/mycef"><img alt="Account-grey" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/account-grey-ca4f6c4fcfb0810c49a4b3be693a67c2.svg" />
+                            <a href="http://127.0.0.1:8000/mycef"><img alt="Account-grey" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/account-grey-ca4f6c4fcfb0810c49a4b3be693a67c2.svg" />
                                 <div class='caption'>
                                     my
                                     <span>CEF</span>
@@ -86,7 +85,7 @@
                                 </div>
                             </a></section>
                         <section>
-                            <a href="#https://www.cef.co.uk/basket"><div class='header-basket'>
+                            <a href="http://127.0.0.1:8000/basket"><div class='header-basket'>
                                     <img alt="Trolley-grey" src="https://04646a9cf351cc0d3888-b8b406d15fe93f790abb5bf0e9ab7ab3.ssl.cf3.rackcdn.com/assets/shared/icons/trolley-grey-4959d15f258557cbe8a9caa51fbd09e1.svg" />
                                 </div>
                                 <div class='caption hidden-phone'>
@@ -111,7 +110,7 @@
                                     <div class='span6'>
                                         <div class='row-fluid'>
                                             <div class='span12'>
-                                                <a href="#https://www.cef.co.uk/mycef/account/new?account=true"><h4>Already have a CEF account</h4>
+                                                <a href="http://127.0.0.1:8000/mycef/account/new?account=true"><h4>Already have a CEF account</h4>
                                                     <p>
                                                         Activate your account to enable online ordering and keep up to date with the latest offers.
                                                     </p>
@@ -121,7 +120,7 @@
                                     <div class='span6'>
                                         <div class='row-fluid'>
                                             <div class='span12'>
-                                                <a href="#https://www.cef.co.uk/mycef/account/new"><h4>Need to create a CEF account</h4>
+                                                <a href="http://127.0.0.1:8000/mycef/account/new"><h4>Need to create a CEF account</h4>
                                                     <p>
                                                         Create your new CEF trade account in minutes and start ordering right away.
                                                     </p>
